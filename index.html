@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padaria Pão Quentinho - www.padaria.com.br</title>
+    <style>
+        /* ==========================================================================
+           1. RESET DE CSS E CONFIGURAÇÕES GERAIS
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fdf8f0;
+            color: #4a2c11;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 10px;
+        }
+
+        /* Container Principal baseado no Esboço */
+        .site-container {
+            width: 100%;
+            max-width: 850px;
+            background-color: #ffffff;
+            border: 2px solid #8c531b;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(74, 44, 17, 0.15);
+            overflow: hidden;
+            margin: auto 0;
+        }
+
+        /* ==========================================================================
+           2. CABEÇALHO (HEADER) - Logotipo e URL
+           ========================================================================== */
+        .header {
+            background-color: #5c3310;
+            color: #fff8f0;
+            padding: 16px 24px;
+            border-bottom: 4px solid #b86e28;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: #3b2009;
+            padding: 8px 16px;
+            border-radius: 10px;
+            border: 1px solid #784518;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        .logo-text-title {
+            font-size: 18px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ffe6c7;
+            display: block;
+        }
+
+        .logo-text-subtitle {
+            font-size: 11px;
+            color: #fca34d;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: block;
+        }
+
+        .website-url {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 15px;
+            font-weight: bold;
+            color: #ffd8a8;
+            background-color: #47260a;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px dashed #b86e28;
+            letter-spacing: 0.5px;
+        }
+
+        /* ==========================================================================
+           3. PAINEL DE FEEDBACK DE REAÇÃO (JAVASCRIPT)
+           ========================================================================== */
+        .feedback-section {
+            padding: 16px 24px;
+            background-color: #fff3e0;
+            border-bottom: 1px solid #ffe0b2;
+        }
+
+        .feedback-box {
+            background-color: #ffffff;
+            border: 2px solid #e0a96d;
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .feedback-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .feedback-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: #ffe0b2;
+            color: #8c531b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .feedback-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #4a2c11;
+            margin-bottom: 2px;
+        }
+
+        .feedback-message {
+            font-size: 13px;
+            color: #6d421e;
+        }
+
+        .feedback-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background-color: #ffe0b2;
+            color: #5c3310;
+            border: 1px solid #e0a96d;
+            white-space: nowrap;
+        }
+
+        /* Classes dinâmicas injetadas pelo JavaScript */
+        .feedback-box.status-ok {
+            background-color: #f0fdf4;
+            border-color: #22c55e;
+        }
+        .feedback-box.status-ok .feedback-icon {
+            background-color: #22c55e;
+            color: #ffffff;
+        }
+        .feedback-box.status-ok .feedback-badge {
+            background-color: #16a34a;
+            color: #ffffff;
+            border-color: #15803d;
+        }
+
+        .feedback-box.status-errado {
+            background-color: #fef2f2;
+            border-color: #ef4444;
+        }
+        .feedback-box.status-errado .feedback-icon {
+            background-color: #ef4444;
+            color: #ffffff;
+        }
+        .feedback-box.status-errado .feedback-badge {
+            background-color: #dc2626;
+            color: #ffffff;
+            border-color: #b91c1c;
+        }
+
+        /* ==========================================================================
+           4. SEÇÕES DO SITE (PRODUTOS, PAGAMENTOS, ENTREGA)
+           ========================================================================== */
+        .section-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: #5c3310;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-decoration: underline;
+            text-decoration-color: #d97706;
+            text-underline-offset: 6px;
+        }
+
+        .section-padding {
+            padding: 24px;
+            border-bottom: 2px solid #f3e5d8;
+        }
+
+        /* --- Grid de Produtos --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .product-item {
+            background-color: #fdfbf7;
+            border: 1px solid #ebd3bc;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .product-item:hover {
+            background-color: #fff8ef;
+        }
+
+        .product-desc {
+            font-size: 13px;
+            color: #5c3e26;
+            line-height: 1.4;
+        }
+
+        /* --- Seção de Pagamentos --- */
+        .payments-grid {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* --- Seção de Entrega --- */
+        .delivery-grid {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* ==========================================================================
+           5. BOTÕES ESTILIZADOS
+           ========================================================================== */
+        .btn {
+            background-color: #8c531b;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 12px 18px;
+            border: none;
+            border-bottom: 4px solid #5c3310;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.15s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+            text-transform: uppercase;
+        }
+
+        .btn-product {
+            width: 120px;
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .btn-payment, .btn-delivery {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .btn-pix {
+            background-color: #0d9488;
+            border-bottom-color: #0f766e;
+        }
+
+        .btn-pix:hover {
+            background-color: #0f766e;
+        }
+
+        .btn:hover {
+            background-color: #734213;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn:active {
+            transform: translateY(2px);
+            border-bottom-width: 1px;
+            box-shadow: none;
+        }
+
+        /* ==========================================================================
+           6. RODAPÉ
+           ========================================================================== */
+        .footer {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 12px;
+            color: #8c531b;
+            font-weight: 600;
+        }
+
+        /* ==========================================================================
+           7. RESPONSIVIDADE (MEDIA QUERIES)
+           ========================================================================== */
+        @media (max-width: 700px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .btn-product {
+                width: 100%;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .logo-box {
+                justify-content: center;
+            }
+
+            .feedback-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .feedback-badge {
+                align-self: flex-start;
+            }
+
+            .payments-grid, .delivery-grid {
+                flex-direction: column;
+            }
+
+            .btn-payment, .btn-delivery {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container Principal do Esboço -->
+    <div class="site-container">
+
+        <!-- 1. Cabeçalho (Header) conforme esboço -->
+        <header class="header">
+            <!-- Logotipo do Canto Esquerdo -->
+            <div class="logo-box">
+                <span class="logo-icon">🥖</span>
+                <div>
+                    <span class="logo-text-title">Padaria</span>
+                    <span class="logo-text-subtitle">Pão Quentinho</span>
+                </div>
+            </div>
+
+            <!-- URL do Canto Direito -->
+            <div class="website-url">
+                www.padaria.com.br
+            </div>
+        </header>
+
+        <!-- Painel de Reação (Feedback do JavaScript) -->
+        <section class="feedback-section">
+            <div id="feedback-box" class="feedback-box">
+                <div class="feedback-left">
+                    <div id="feedback-icon" class="feedback-icon">ℹ</div>
+                    <div>
+                        <div id="feedback-title" class="feedback-title">Painel de Interação</div>
+                        <div id="feedback-message" class="feedback-message">Clique nos botões do site abaixo para acionar o script.</div>
+                    </div>
+                </div>
+                <div id="feedback-badge" class="feedback-badge">Aguardando</div>
+            </div>
+        </section>
+
+        <!-- 2. Seção PRODUTOS -->
+        <section class="section-padding">
+            <h2 class="section-title">PRODUTOS</h2>
+
+            <div class="products-grid">
+                
+                <!-- BOLOS -->
+                <div class="product-item">
+                    <button onclick="executarAcao('BOLOS')" class="btn btn-product">
+                        🎂 BOLOS
+                    </button>
+                    <p class="product-desc">
+                        Bolos fofinhos e recheados, artesanais, tortas confeitadas e opções vulcão preparados todos os dias na nossa cozinha.
+                    </p>
+                </div>
+
+                <!-- SALGADOS -->
+                <div class="product-item">
+                    <button onclick="executarAcao('SALGADOS')" class="btn btn-product">
+                        🥐 SALGADOS
+                    </button>
+                    <p class="product-desc">
+                        Coxinhas, empadas, croissants e folhados fritos e assados sempre quentinhos e bem recheados.
+                    </p>
+                </div>
+
+                <!-- DOCES -->
+                <div class="product-item">
+                    <button onclick="executarAcao('DOCES')" class="btn btn-product">
+                        🍩 DOCES
+                    </button>
+                    <p class="product-desc">
+                        Sonhos de bisnaga, brigadeiros gourmet, pudins cremosos e carolinas crocantes para deixar seu dia mais doce.
+                    </p>
+                </div>
+
+                <!-- PÃES -->
+                <div class="product-item">
+                    <button onclick="executarAcao('PAES')" class="btn btn-product">
+                        🥖 PÃES
+                    </button>
+                    <p class="product-desc">
+                        Pão francês crocante saindo toda hora, pão de queijo quentinho e opções de fermentação natural.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. Seção PAGAMENTOS -->
+        <section class="section-padding">
+            <h2 class="section-title">PAGAMENTOS</h2>
+
+            <div class="payments-grid">
+                <!-- CARTÃO DÉBITO -->
+                <button onclick="executarAcao('DEBITO')" class="btn btn-payment">
+                    💳 CARTÃO DÉBITO
+                </button>
+
+                <!-- CARTÃO CRÉDITO -->
+                <button onclick="executarAcao('CREDITO')" class="btn btn-payment">
+                    💳 CARTÃO CRÉDITO
+                </button>
+
+                <!-- PIX -->
+                <button onclick="executarAcao('PIX')" class="btn btn-payment btn-pix">
+                    ⚡ PIX
+                </button>
+            </div>
+        </section>
+
+        <!-- 4. Seção ENTREGA -->
+        <section class="section-padding" style="border-bottom: none;">
+            <h2 class="section-title">ENTREGA</h2>
+
+            <div class="delivery-grid">
+                <!-- ENTREGA RÁPIDA -->
+                <button onclick="executarAcao('ENTREGA_RAPIDA')" class="btn btn-delivery">
+                    🚀 ENTREGA RÁPIDA
+                </button>
+
+                <!-- ENTREGA NORMAL -->
+                <button onclick="executarAcao('ENTREGA_NORMAL')" class="btn btn-delivery">
+                    🚚 ENTREGA NORMAL
+                </button>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Rodapé informativo -->
+    <footer class="footer">
+        &copy; 2026 Padaria Pão Quentinho - Todos os direitos reservados.
+    </footer>
+
+    <!-- Script em Vanilla JavaScript puro -->
+    <script>
+        // Mapeamento das Reações de cada botão (Status OK vs ERRADO)
+        const reacoes = {
+            // Produtos
+            'BOLOS': {
+                status: 'OK',
+                titulo: 'OK: Categoria Bolos Selecionada',
+                mensagem: 'Cardápio de bolos frescos e tortas carregado com sucesso!',
+                icone: '✓'
+            },
+            'SALGADOS': {
+                status: 'ERRADO',
+                titulo: 'ERRADO: Salgados Indisponíveis',
+                mensagem: 'Forno em manutenção! A próxima fornada de salgados sairá em 30 minutos.',
+                icone: '✕'
+            },
+            'DOCES': {
+                status: 'OK',
+                titulo: 'OK: Categoria Doces Selecionada',
+                mensagem: 'Doces e brigadeiros artesanais prontos para pronta entrega.',
+                icone: '✓'
+            },
+            'PAES': {
+                status: 'OK',
+                titulo: 'OK: Fornada Quentinha!',
+                mensagem: 'Pão francês saindo do forno agora. Pedido confirmado.',
+                icone: '✓'
+            },
+
+            // Pagamentos
+            'DEBITO': {
+                status: 'ERRADO',
+                titulo: 'ERRADO: Sistema de Débito Indisponível',
+                mensagem: 'Serviço do banco offline no momento. Por favor escolha Crédito ou Pix.',
+                icone: '✕'
+            },
+            'CREDITO': {
+                status: 'OK',
+                titulo: 'OK: Pagamento via Crédito',
+                mensagem: 'Transação aprovada com sucesso! Aceitamos todas as bandeiras.',
+                icone: '✓'
+            },
+            'PIX': {
+                status: 'OK',
+                titulo: 'OK: Pagamento via PIX',
+                mensagem: 'Chave Pix copiada com sucesso! Desconto de 5% aplicado no pedido.',
+                icone: '✓'
+            },
+
+            // Entregas
+            'ENTREGA_RAPIDA': {
+                status: 'ERRADO',
+                titulo: 'ERRADO: Região Fora do Raio Expresso',
+                mensagem: 'Entrega Rápida temporariamente indisponível devido ao alto tráfego local.',
+                icone: '⚠️'
+            },
+            'ENTREGA_NORMAL': {
+                status: 'OK',
+                titulo: 'OK: Entrega Normal Confirmada',
+                mensagem: 'Seu pedido será entregue no endereço em até 40 minutos.',
+                icone: '✓'
+            }
+        };
+
+        // Função Vanilla JS executada no clique dos botões
+        function executarAcao(chaveAcao) {
+            const box = document.getElementById('feedback-box');
+            const icon = document.getElementById('feedback-icon');
+            const title = document.getElementById('feedback-title');
+            const message = document.getElementById('feedback-message');
+            const badge = document.getElementById('feedback-badge');
+
+            const reacao = reacoes[chaveAcao];
+            if (!reacao) return;
+
+            // Atualiza textos
+            title.textContent = reacao.titulo;
+            message.textContent = reacao.mensagem;
+            icon.textContent = reacao.icone;
+
+            // Limpa classes anteriores de estilo
+            box.classList.remove('status-ok', 'status-errado');
+
+            // Aplica novos estilos conforme o resultado
+            if (reacao.status === 'OK') {
+                box.classList.add('status-ok');
+                badge.textContent = 'STATUS: OK';
+            } else {
+                box.classList.add('status-errado');
+                badge.textContent = 'STATUS: ERRADO';
+            }
+        }
+    </script>
+</body>
+</html>
